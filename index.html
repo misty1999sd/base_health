@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>100 LED</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="screen-noise"></div>
+  <div class="screen-vignette"></div>
+
+  <main class="app-shell">
+    <section id="title-screen" class="title-screen">
+      <div class="title-backdrop">
+        <div class="title-aurora"></div>
+        <div class="title-copy">
+          <p class="title-kicker">互动生存冒险 / ARPG 叙事风格</p>
+          <h1>100 LED</h1>
+          <p class="title-subtitle">每一份体面，都在消耗胸口那道灯。</p>
+          <p class="title-description">
+            从入职、转正、买房、成家到被系统挑选，你要在 KPI、债务、亲密关系和真相之间走完一条越来越窄的路。
+          </p>
+        </div>
+        <div class="title-panel">
+          <button id="continue-button" class="menu-button primary" type="button">继续游戏</button>
+          <button id="new-game-button" class="menu-button" type="button">开始新周目</button>
+          <button id="gallery-button" class="menu-button" type="button">结局图鉴</button>
+          <p id="continue-hint" class="menu-hint"></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="game-shell" class="game-shell hidden">
+      <div class="utility-bar">
+        <button id="menu-button" class="utility-button" type="button">返回标题</button>
+        <button id="gallery-top-button" class="utility-button" type="button">结局图鉴</button>
+        <button id="help-button" class="utility-button" type="button">操作说明</button>
+        <button id="restart-button" class="utility-button danger" type="button">重开本周目</button>
+      </div>
+
+      <section class="viewport-panel">
+        <div id="viewport-frame" class="viewport-frame scene-office">
+          <img id="scene-image" class="scene-image" alt="场景画面">
+          <div class="scene-gradient"></div>
+          <div class="scene-particles"></div>
+          <div id="battery-alert" class="battery-alert">低电量警报</div>
+
+          <div class="mission-strip">
+            <p id="chapter-label" class="chapter-label"></p>
+            <h2 id="scene-title" class="scene-title"></h2>
+            <p id="scene-quote" class="scene-quote"></p>
+          </div>
+
+          <div class="status-overlay">
+            <div class="status-card">
+              <span class="status-name">电量</span>
+              <strong id="battery-value" class="status-value">100%</strong>
+              <div class="meter-track"><div id="battery-bar" class="meter-fill battery"></div></div>
+            </div>
+            <div class="status-card">
+              <span class="status-name">KPI</span>
+              <strong id="kpi-value" class="status-value">0%</strong>
+              <div class="meter-track"><div id="kpi-bar" class="meter-fill kpi"></div></div>
+            </div>
+            <div class="status-card">
+              <span class="status-name">家庭</span>
+              <strong id="family-value" class="status-value">50</strong>
+              <div class="meter-track"><div id="family-bar" class="meter-fill family"></div></div>
+            </div>
+            <div class="status-card">
+              <span class="status-name">觉醒</span>
+              <strong id="awareness-value" class="status-value">0</strong>
+              <div class="meter-track"><div id="awareness-bar" class="meter-fill awareness"></div></div>
+            </div>
+            <div class="status-card">
+              <span class="status-name">债务</span>
+              <strong id="debt-value" class="status-value">10</strong>
+              <div class="meter-track"><div id="debt-bar" class="meter-fill debt"></div></div>
+            </div>
+          </div>
+
+          <div class="hero-hud">
+            <div class="portrait-shell">
+              <div class="portrait-core"></div>
+              <div class="portrait-ring"></div>
+            </div>
+            <div class="hero-copy">
+              <p class="hero-label">角色状态</p>
+              <h3>员工 0 号</h3>
+              <p id="hero-state" class="hero-state"></p>
+            </div>
+          </div>
+
+          <div class="choice-overlay">
+            <div id="choice-list" class="choice-deck"></div>
+          </div>
+          <div id="ending-overlay" class="ending-overlay hidden">
+            <div class="ending-card">
+              <p class="codex-kicker">结算画面</p>
+              <p id="ending-code" class="ending-code"></p>
+              <h3 id="ending-title-card" class="ending-title-card"></h3>
+              <p id="ending-verdict" class="ending-verdict"></p>
+              <div id="ending-stats" class="ending-stats"></div>
+              <p id="ending-epitaph" class="ending-epitaph"></p>
+              <div class="ending-actions">
+                <button id="ending-restart-button" class="menu-button primary" type="button">开启新周目</button>
+                <button id="ending-menu-button" class="menu-button" type="button">返回标题</button>
+                <button id="ending-gallery-button" class="menu-button" type="button">查看结局图鉴</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="story-panel">
+          <p class="codex-kicker">剧情日志</p>
+          <div id="story-text" class="story-text"></div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="gallery-modal" class="gallery-modal">
+    <div class="gallery-head">
+      <div>
+        <p class="codex-kicker">结局图鉴</p>
+        <h3>你已经看见了哪些门后世界</h3>
+      </div>
+      <button id="close-gallery-button" class="utility-button" type="button">关闭</button>
+    </div>
+    <div id="gallery-list" class="gallery-list"></div>
+  </dialog>
+
+  <dialog id="help-modal" class="gallery-modal help-modal">
+    <div class="gallery-head">
+      <div>
+        <p class="codex-kicker">操作说明</p>
+        <h3>如何推进这段人生</h3>
+      </div>
+      <button id="close-help-button" class="utility-button" type="button">关闭</button>
+    </div>
+    <div class="help-body">
+      <p>点击下方行动卡推进剧情，也可以按键盘 `1` `2` `3` 触发对应选项。</p>
+      <p>电量过低会进入警报状态。觉醒越高，越容易提前看穿系统的门和谎言。</p>
+      <p>这是一个长流程叙事周目，完整体验通常需要约 25 到 35 分钟。</p>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
